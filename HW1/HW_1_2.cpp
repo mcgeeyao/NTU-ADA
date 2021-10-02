@@ -3,39 +3,82 @@
 #include <math.h>
 #include <algorithm>
 using namespace std;
-bool comp(vector<int> a,vector<int> b){
-    return a[1]>b[1];
+int a,b,c;
+bool comp_z(pair<long long,long long> a,pair<long long,long long> b){
+    return a.second>b.second;
 }
+bool comp_p(pair<long long,long long> a,pair<long long,long long> b){
+    return a.first>b.first;
+}
+long long dc(vector<pair<long long,long long>>& v,int left,int right){
+    long long ans=0;
+    if(left>=right){
+        return 0;
+    }
+    int mid=(left+right)/2;
+    while(mid<right and v[mid].second==v[mid+1].second){
+        mid++;
+    }if(mid==right){
+        while(mid>left and v[mid].second==v[mid-1].second){
+            mid--;
+        }
+        if(mid==left){
+            sort(v.begin()+left,v.begin()+right+1,comp_p);
+            return 0;
+        }mid--;
+    }
+    long long lans=dc(v,left,mid);
+    long long rans=dc(v,mid+1,right);
+    int ind=left;
+    for(int i=mid+1;i<=right;i++){
+        while(ind<=mid and a*v[ind].first>b*v[i].first+c){
+            ind++;
+        }
+        ans+=(ind-left);
+    }
+    vector<pair<long long,long long>> tmp(right-mid,pair<long long,long long>());
+    for(int i=0;i<right-mid;i++){
+        tmp[i]=v[mid+i+1];
+    }
+    int m=right-mid-1;
+    int n=mid;
+    int k=right;
+    while(n>=left and m>=0){
+        if(v[n].first < tmp[m].first){
+            v[k--] = v[n--];
+        }else{
+            v[k--] = tmp[m--];
+        }      
+    }
+    while(m>=0){
+        v[k--] = tmp[m--];
+    }
+        
+    /*
+    cout<<left<<" "<<right<<endl;
+    for(auto i:v){
+        cout<<i.first<<" ";
+    }cout<<endl;*/
+    //sort(v.begin()+left,v.begin()+right+1,comp_p);
+    return ans+lans+rans;
+}
+
 int main(){
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
     
-    int n,a,b,c,x,y;
-    long long ans,tmp;
+    int n;
+    long long ans,tmp,x,y;
     while(cin>>n>>a>>b>>c){
-        vector<int> pa(n),pb(n),z(n);
-        vector<vector<int>> p(n,vector<int>(2));
+        vector<pair<long long,long long>> v(n,pair<long long,long long>());
         for(int i=0;i<n;i++){
             cin>>x>>y;
-            p[i]={i,x};
-            z.push_back(y);
+            v[i]=make_pair(x,y);
         }
-        cout<<n<<endl;
-        for(auto i:p){
-            cout<<i[0]<<i[1]<<" ";
-        }
-        sort(p.begin(),p.end(),comp);
-        for(int i=0;i<n;i++){
-            pa[i]=p[i][1]*a;
-        }
-        for(int i=0;i<n;i++){
-            pb[i]=p[i][1]*b+c;
-        }
-        //ans=0;
-        tmp=0;
-        //for(int i=0;i<n;i++){
-
-        //}
+        sort(v.begin(),v.end(),comp_z);
+        ans=dc(v,0,v.size()-1);
+        cout<<ans<<endl;
+        
     }
     return 0;
 }

@@ -3,6 +3,15 @@
         "vector": "cpp",
         "iostream": "cpp",
         "algorithm": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__functional_03": "cpp",
+        "__string": "cpp",
+        "functional": "cpp",
+        "string": "cpp",
+        "system_error": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "ios": "cpp",
+        "utility": "cpp"
     }
 }
