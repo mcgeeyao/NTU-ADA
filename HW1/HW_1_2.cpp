@@ -36,22 +36,22 @@ long long dc(vector<pair<long long,long long>>& v,int left,int right){
         }
         ans+=(ind-left);
     }
-    vector<pair<long long,long long>> tmp(right-mid,pair<long long,long long>());
+    vector<long long> tmp(right-mid);
     for(int i=0;i<right-mid;i++){
-        tmp[i]=v[mid+i+1];
+        tmp[i]=v[mid+i+1].first;
     }
     int m=right-mid-1;
     int n=mid;
     int k=right;
     while(n>=left and m>=0){
-        if(v[n].first < tmp[m].first){
-            v[k--] = v[n--];
+        if(v[n].first < tmp[m]){
+            v[k--].first = v[n--].first;
         }else{
-            v[k--] = tmp[m--];
+            v[k--].first = tmp[m--];
         }      
     }
     while(m>=0){
-        v[k--] = tmp[m--];
+        v[k--].first = tmp[m--];
     }
         
     /*

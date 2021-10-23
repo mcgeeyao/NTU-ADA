@@ -24,8 +24,7 @@ int hanoi(vector<vector<int>>& tower,int n,int start,int target){
         long long tmp=hanoi(tower,n-1,start,~(start|target)&3);
         if(tmp==-1)return tmp;
         tmp%=MOD;
-        long long tmp2=modulo(2,n-1,MOD);
-        return tmp+tmp2;
+        return tmp+modulo(2,n-1,MOD);
     }else if(tower[target].size()>0 and tower[target][tower[target].size()-1]==n){
         tower[target].pop_back();
         long long tmp=hanoi(tower,n-1,~(start|target)&3,target);
