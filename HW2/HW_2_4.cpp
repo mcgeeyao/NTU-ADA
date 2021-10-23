@@ -44,7 +44,7 @@ int main(){
             }
 
             vector<long> ans(n);
-            unordered_set<long> used;
+            vector<bool> used(n,false);
             priority_queue< vector<long> , vector<vector<long>> , greater<vector<long>> > pq; 
             unordered_map<long,long> left;
             unordered_map<long,long> right;
@@ -61,12 +61,12 @@ int main(){
             for(int i=maxlen-3;i>=0;i-=2){
 
                 vector<long> tmp=pq.top();
-                while(used.count(tmp[1]) or used.count(tmp[2])){
+                while(used[tmp[1]] or used[tmp[2]]){
                     pq.pop();
                     tmp=pq.top();
                 }pq.pop();
-                used.insert(tmp[1]);
-                used.insert(tmp[2]);
+                used[tmp[1]]=true;
+                used[tmp[2]]=true;
                 currsum-=tmp[0];
                 right[left[tmp[1]]]=right[tmp[2]];
                 left[right[tmp[2]]]=left[tmp[1]];
@@ -88,7 +88,7 @@ int main(){
                 for(auto i:newv){
                     currsum+=i;
                 }
-                used.clear();
+                vector<bool> used2(n,false);
                 while (!pq.empty()) pq.pop(); 
                 for(int i=0;i<maxlen-2;i++){
                     pq.push({newv[i]+newv[i+1],i,i+1});      
@@ -102,12 +102,12 @@ int main(){
 
                 for(int i=maxlen-4;i>=0;i-=2){
                     vector<long> tmp=pq.top();
-                    while(used.count(tmp[1]) or used.count(tmp[2])){
+                    while(used2[tmp[1]] or used2[tmp[2]]){
                         pq.pop();
                         tmp=pq.top();
                     }pq.pop();
-                    used.insert(tmp[1]);
-                    used.insert(tmp[2]);
+                    used2[(tmp[1])]=true;
+                    used2[(tmp[2])]=true;
                     currsum-=tmp[0];
                     right[left[tmp[1]]]=right[tmp[2]];
                     left[right[tmp[2]]]=left[tmp[1]];
