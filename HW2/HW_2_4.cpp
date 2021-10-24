@@ -2,7 +2,6 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
-#include <unordered_set>
 #include <queue>
 #include <unordered_map>
 using namespace std;
@@ -28,7 +27,7 @@ int main(){
                 p=false;
             }
             tmpv.push_back(v[0]);
-            long maxlen=1;
+            int maxlen=1;
             for(int i=1;i<n;i++){
                 if((v[i]<0 and p) or (v[i]>0 and !p)){
                     maxlen++;
@@ -46,8 +45,8 @@ int main(){
             vector<long> ans(n);
             vector<bool> used(n,false);
             priority_queue< vector<long> , vector<vector<long>> , greater<vector<long>> > pq; 
-            unordered_map<long,long> left;
-            unordered_map<long,long> right;
+            unordered_map<int,int> left;
+            unordered_map<int,int> right;
 
             for(int i=0;i<maxlen-1;i++){
                 pq.push({tmpv[i]+tmpv[i+1],i,i+1});      
@@ -106,8 +105,8 @@ int main(){
                         pq.pop();
                         tmp=pq.top();
                     }pq.pop();
-                    used2[(tmp[1])]=true;
-                    used2[(tmp[2])]=true;
+                    used2[tmp[1]]=true;
+                    used2[tmp[2]]=true;
                     currsum-=tmp[0];
                     right[left[tmp[1]]]=right[tmp[2]];
                     left[right[tmp[2]]]=left[tmp[1]];
