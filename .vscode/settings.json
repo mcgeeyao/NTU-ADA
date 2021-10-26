@@ -12,6 +12,21 @@
         "iosfwd": "cpp",
         "iterator": "cpp",
         "ios": "cpp",
-        "utility": "cpp"
-    }
+        "utility": "cpp",
+        "unordered_map": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__split_buffer": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "queue": "cpp",
+        "string_view": "cpp",
+        "unordered_set": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "memory": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
