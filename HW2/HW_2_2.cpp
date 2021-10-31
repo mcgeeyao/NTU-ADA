@@ -47,6 +47,7 @@ int main(){
                 long tmp=0;
                 
                 if(gcdtable[i][i+k]>1){
+                    //1,(),1,(),1
                     for(int a=2;a<k-1;a++){
                         if(dp[i+1][i+a-1]>1 and dp[i+a+1][i+k-1]>1){
                             if(gcdtable[i][i+a]>1 and gcdtable[i+a][i+k]>1){
@@ -54,21 +55,24 @@ int main(){
                             }
                         }
                     }
+                    //1,(),2
                     if(dp[i+1][i+k-2]>1){
                         if(gcdtable[i][i+k-1]>1 and gcdtable[i+k-1][i+k]>1){
                             tmp=max(tmp,dp[i+1][i+k-2]+gcdtable[i][i+k-1]+gcdtable[i+k-1][i+k]);
                         }
                     }
+                    //2,(),1
                     if(dp[i+2][i+k-1]>1){
                         if(gcdtable[i][i+1]>1 and gcdtable[i+1][i+k]>1){
                             tmp=max(tmp,dp[i+2][i+k-1]+gcdtable[i][i+1]+gcdtable[i+1][i+k]);
                         }
                     }
+                    //1,(),1
                     if(dp[i+1][i+k-1]>1){
                         tmp=max(tmp,dp[i+1][i+k-1]+gcdtable[i][i+k]);
                     }
-
                 }
+                //(),()
                 for(int a=1;a<k-1;a++){
                     if(dp[i][i+a]>1 and dp[i+a+1][i+k]>1){
                         tmp=max(tmp,dp[i][i+a]+dp[i+a+1][i+k]);
