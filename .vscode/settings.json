@@ -26,7 +26,13 @@
         "unordered_set": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "chrono": "cpp",
+        "limits": "cpp",
+        "map": "cpp",
+        "__tree": "cpp",
+        "set": "cpp",
+        "__nullptr": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
