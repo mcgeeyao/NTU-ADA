@@ -12,17 +12,18 @@ for (int i=0;i<vec.size();i++)\
 cout<<vec[i]<<" ";\
 cout<<endl;
 using namespace std;
+unsigned long long n;
 
 int main(){
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
     long long v1,u;
-    unsigned long long w,e,n;
+    unsigned long long w,e;
     
     while(cin>>n>>e){
         vector<unordered_map<long long,unsigned long long> > adj(n+1,unordered_map<long long,unsigned long long> ());
         vector<unordered_map<long long,unsigned long long> > edgesindx(n+1,unordered_map<long long,unsigned long long> ());
-        for(int i=0;i<e;i++){
+        for(long long i=0;i<e;i++){
             cin>>u>>v1>>w;
             adj[v1][u]=w;
             adj[u][v1]=w;
@@ -30,32 +31,29 @@ int main(){
             edgesindx[u][v1]=i+1;
         }
         unsigned long long mincost=0;
-        unordered_set<long long> nseen;
-        for(long long i=1;i<=n;i++){
-            nseen.insert(i);
-        }
+        vector<bool> nseen(n+1,true);
+        int cnt=0;
         vector<unsigned long long>edgs(n+1,ULLONG_MAX);
         edgs[1]=0;
         priority_queue< pair<unsigned long long,long long>, vector<pair<unsigned long long,long long> > , greater<pair<unsigned long long,long long> > > pq;
         pq.push(make_pair(0,1));
-        while(!nseen.empty()){
+        while(cnt<n){
             pair<unsigned long long,long long> v=pq.top();
             pq.pop();
-            if(nseen.find(v.second)!=nseen.end() and edgs[v.second]==v.first){
-                nseen.erase(v.second);
+            if(nseen[v.second] and edgs[v.second]==v.first){
+                nseen[v.second]=false;
+                cnt++;
                 mincost+=v.first;
                 for(auto& i:adj[v.second]){
-                    if (nseen.find(i.first)!=nseen.end() and edgs[i.first]>i.second){
+                    if (nseen[i.first] and edgs[i.first]>i.second){
                         pq.push(make_pair(i.second,i.first));
                         edgs[i.first]=i.second;
                     }
                 }
             }
         }
-        unordered_set<long long> nseen2;
-        for(long long i=1;i<=n;i++){
-            nseen2.insert(i);
-        }
+        cnt=0;
+        vector<bool> nseen2(n+1,true);
         vector<unsigned long long> dist(n+1,ULLONG_MAX);
         dist[1]=0;
         vector<long long> parent(n+1,0);
@@ -65,19 +63,17 @@ int main(){
         // }
         
         pq2.push(make_pair(0,1));
-        while(!nseen2.empty()){
+        while(cnt<n){
             pair<unsigned long long,long long> v=pq2.top();
             pq2.pop();
-            if(nseen2.find(v.second)!=nseen2.end() and dist[v.second]==v.first){
-                // cout<<v.second<<endl;
-                // print(dist)
-                // print(parent)
-                nseen2.erase(v.second);
+            if(nseen2[v.second] and dist[v.second]==v.first){
+                nseen2[v.second]=false;
+                cnt++;
                 for(auto& i:adj[v.second]){
-                    if(nseen2.find(i.first)!=nseen2.end() and dist[i.first]==dist[v.second]+i.second){
+                    if(nseen2[i.first] and dist[i.first]==dist[v.second]+i.second and i.second<adj[i.first][parent[i.first]]){
                         parent[i.first]=v.second;
                     }
-                    if(nseen2.find(i.first)!=nseen2.end() and dist[i.first]>dist[v.second]+i.second){
+                    if(nseen2[i.first] and dist[i.first]>dist[v.second]+i.second){
                         pq2.push(make_pair(dist[v.second]+i.second,i.first));
                         dist[i.first]=dist[v.second]+i.second;
                         parent[i.first]=v.second;
