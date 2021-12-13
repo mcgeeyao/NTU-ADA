@@ -32,7 +32,8 @@
         "map": "cpp",
         "__tree": "cpp",
         "set": "cpp",
-        "__nullptr": "cpp"
+        "__nullptr": "cpp",
+        "complex": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

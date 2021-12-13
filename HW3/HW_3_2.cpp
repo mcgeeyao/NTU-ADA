@@ -1,5 +1,6 @@
 //kosaraju algorithm
 //strongly connected component
+//minimum addition edges let DAG to strongly connected
 
 
 #include <iostream>
