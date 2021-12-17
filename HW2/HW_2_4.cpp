@@ -1,3 +1,6 @@
+//greedy 
+//circular doubly linked list
+
 #include <iostream>
 #include <vector>
 #include <math.h>

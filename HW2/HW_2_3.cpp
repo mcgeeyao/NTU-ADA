@@ -1,3 +1,5 @@
+//greedy 疊疊樂
+
 #include <iostream>
 #include <vector>
 #include <math.h>

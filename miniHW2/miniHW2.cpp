@@ -7,16 +7,16 @@
 #include <unordered_set>
 using namespace std;
 
-void dfs(int curr,unordered_set<int>& seen,unordered_map<int,vector<int> >& edges){
-    if(seen.find(curr)!=seen.end()){
-        return ;
-    }
-    cout<<curr<<" ";
-    seen.insert(curr);
-    for(auto i:edges[curr]){
-        dfs(i,seen,edges);
-    }
-}
+// void dfs(int curr,unordered_set<int>& seen,unordered_map<int,vector<int> >& edges){
+//     if(seen.find(curr)!=seen.end()){
+//         return ;
+//     }
+//     cout<<curr<<" ";
+//     seen.insert(curr);
+//     for(auto i:edges[curr]){
+//         dfs(i,seen,edges);
+//     }
+// }
 
 
 int main(){

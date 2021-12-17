@@ -1,3 +1,9 @@
+//monotone queue
+//two pointer
+//BFS BFS BFS BFS
+
+
+
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -12,16 +18,6 @@ cout<<v[i]<<" ";\
 cout<<endl;
 using namespace std;
 
-void dfs(int curr,unordered_set<int>& seen,unordered_map<int,vector<int> >& edges){
-    if(seen.find(curr)!=seen.end()){
-        return ;
-    }
-    cout<<curr<<" ";
-    seen.insert(curr);
-    for(auto i:edges[curr]){
-        dfs(i,seen,edges);
-    }
-}
 
 int main(){
     std::ios_base::sync_with_stdio(false);

@@ -1,3 +1,5 @@
+//triangle DP
+
 #include <iostream>
 #include <vector>
 #include <math.h>
