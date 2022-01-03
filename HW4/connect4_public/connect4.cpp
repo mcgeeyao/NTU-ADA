@@ -221,6 +221,7 @@ int decide(int yp_move) {
                 board[i][j]=0;
             }
         }
+        moves=0;
         board[5][3]=1;
         MakeMove(board,3,5,1);
         return 3;
