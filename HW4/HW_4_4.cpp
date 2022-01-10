@@ -25,7 +25,7 @@ int main(){
             cin>>x>>y;
             cout<<x+y;
         }else{
-vector<long long> list(n);
+        vector<long long> list(n);
         for(int i=0;i<n;i++){
             cin>>x;
             list[i]=x;
