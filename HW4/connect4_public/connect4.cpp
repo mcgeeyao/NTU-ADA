@@ -166,7 +166,7 @@ int minimax(int depth,int alpha,int beta,bool myturn,vector<vector<int>>& board)
                 UnmakeMove(board,i,row);
                 return 1000;
             }
-            int eval = minimax( depth - 1, alpha, beta ,false,board);
+            int eval = minimax(depth-1,alpha,beta,false,board);
             UnmakeMove(board,i,row);
 			maxEval = max(maxEval, eval);
 			alpha = max(alpha, eval);
@@ -182,11 +182,11 @@ int minimax(int depth,int alpha,int beta,bool myturn,vector<vector<int>>& board)
                 UnmakeMove(board,i,row);
                 return -1000;
             }
-            int eval = minimax( depth - 1, alpha, beta ,true,board);
+            int eval = minimax(depth-1,alpha,beta,true,board);
             UnmakeMove(board,i,row);
-			minEval = min(minEval, eval);
+			minEval = min(minEval,eval);
 			beta = min(beta, eval);
-			if(beta <= alpha)break;
+			if(beta<=alpha)break;
         }
 		return minEval;
     }

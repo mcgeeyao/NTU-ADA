@@ -3,7 +3,6 @@
 #include <math.h>
 #include <algorithm>
 using namespace std;
-int a,b,c;
 bool comp_z(pair<long long,long long> a,pair<long long,long long> b){
     return a.second>b.second;
 }
