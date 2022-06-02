@@ -17,7 +17,7 @@ int main(){
     while(cin>>n){
         ans=0;
         vector<vector<int>> v(n,vector<int>(4));
-        unordered_set<int>tmpPs;
+        unordered_set<int> tmpPs;
         for(int i=0;i<n;i++){
             cin>>x>>y>>z>>w;
             v[i]={x,y,z,w};
