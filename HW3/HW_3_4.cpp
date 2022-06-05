@@ -1,3 +1,6 @@
+//union find with node
+
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -11,6 +14,15 @@ using namespace std;
 long long cn2(long long n){
     return n*(n-1)/2;
 }
+struct myNode {
+    long long val;
+    myNode *parent;
+    myNode() : val(-1), parent(nullptr) {}
+    myNode(long long x) : val(x), parent(nullptr) {}
+    myNode(long long x, myNode *parent) : val(x), parent(parent) {}
+};
+
+
 int main(){
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(nullptr);
@@ -22,13 +34,16 @@ int main(){
     set<pair<int,int>>::iterator sit;
     while(cin>>n>>q){
         map<long long,long long> line; //pos,number
-        unordered_map<int,map<long long,long long>> movelist;
-        vector<pair<int,int>> cats(n+1);
+        vector<myNode*> cats(n+1);
+        unordered_map<long long, myNode *> nodelist;
 
         for(int i=1;i<n+1;i++){
             cin>>pos;
+            if(!nodelist[pos]){
+                nodelist[pos]=new myNode(pos);
+            }
             line[pos]++;
-            cats[i]=make_pair(0,pos);
+            cats[i]=nodelist[pos];
         }
         vector<long long> reslist;
         res=0;
@@ -38,47 +53,54 @@ int main(){
         for(int c=0;c<q;c++){
             cin>>op>>x>>y;
             if(op-1){
-                int time=cats[x].first;
-                int currpos=cats[x].second;
-                int time1=time;
-                int currpos1=currpos;
-                it=movelist[currpos].lower_bound(time);
-                while(it!=movelist[currpos].end()){
-                    time=it->first;
-                    currpos=it->second;
-                    it=movelist[currpos].lower_bound(time);
+                myNode* firstNode=cats[x],* currNode=cats[x];
+
+                while(currNode->val==-1){
+                    currNode=currNode->parent;
                 }
-                res+=cn2(line[currpos]-1)-cn2(line[currpos]);
-                line[currpos]--;
-                if(line[currpos]==0){
-                    line.erase(currpos);
+                res-=line[currNode->val]-1;
+                line[currNode->val]--;
+                if(line[currNode->val]==0){
+                    line.erase(currNode->val);
                 }
-                res+=cn2(line[y]+1)-cn2(line[y]);
-                line[y]++;
-                cats[x]=make_pair(c+1,y);
+                if(nodelist[y]){
+                    cats[x]=nodelist[y];
+                    res+=line[y];
+                    line[y]++;
+                }else{
+                    nodelist[y]=new myNode(y);
+                    cats[x]=nodelist[y];
+                    line[y]++;
+                }
                 reslist.push_back(res);
 
-                it=movelist[currpos1].lower_bound(time1);
-                while(it!=movelist[currpos1].end()){
-                    movelist[currpos1][time1]=currpos;
-                    time1=it->first;
-                    currpos1=it->second;
-                    it=movelist[currpos1].lower_bound(time1);
+                while(firstNode->val==-1){
+                    myNode* tmp=firstNode->parent;
+                    firstNode->parent=currNode;
+                    firstNode=tmp;
                 }
+
+
+
             }else{
+                myNode* food=new myNode(x);
                 long long lost=0;
                 long long get=0;
                 for(it=line.lower_bound(x-y);it!=line.end();it++){
                     if(it->first>x+y)break;
+                    nodelist[it->first]->val=-1;
+                    nodelist[it->first]->parent=food;
+                    nodelist[it->first]=nullptr;
                     lost+=cn2(it->second);
                     get+=it->second;
-                    movelist[it->first].insert(make_pair(c+1,x));
                 }line.erase(line.lower_bound(x-y),line.upper_bound(x+y));
                 if(get){
                     res-=lost;
                     res+=cn2(get);
                     line[x]=get;
-                }reslist.push_back(res);
+                }
+                nodelist[x]=food;
+                reslist.push_back(res);
             }
         }
         print(reslist)
